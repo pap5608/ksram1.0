@@ -1,0 +1,23 @@
+<!doctype html>
+
+ <head>
+  <meta charset="UTF-8">
+  <link href="./contents.css" rel="stylesheet" type="text/css" />	
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+  <title>Document</title>
+ </head>
+ <body>
+  <table>
+   <tr>
+     <th>이름</th>
+	</tr>
+	<% data.forEach(function (item, index) { %>
+	<tr>
+	 <td> <%= item.OS_NAME %>
+	 </tr>
+	  <% }); %>
+	</table>
+
+ </body>
+</html>

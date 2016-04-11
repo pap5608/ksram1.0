@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<head>
+<meta charset="utf-8" />
+<link href="./contents.css" rel="stylesheet" type="text/css" />	
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<!--
+<script>
+	$(document).ready(function() { 
+		//click event need
+		$('a').click(function () {
+			var socket = io.connect();
+		});
+	
+		
+	});
+</script>
+-->
+</head>
+<body>
+<!--	<header id = "main_header">  -->
+		Hi guys
+		
+<!-- 	</header>   -->
+<!--
+	<div id="content">
+		<aside id="main_aside">
+			<nav id='main_gnb'>
+				<ul class='filter'>
+					<li id="os"><a href="#">O/S</a></li>
+					<li id="server"><a href="#">SERVER</a></li>
+					<li id="disk"><a href="#">DISK</a></li>
+					<li id="asset"><a href="#">ASSET</a></li>
+				</ul>
+			</nav>
+		</aside>
+		<section id="main_section">
+		-->
+			<table>
+				<tr>
+					<th>이름</th>
+					<th>상세내용</th>
+					<th>업무</th>
+					<th>OS이름</th>
+				</tr>
+				<% data.forEach(function (item, index) { %>
+				<tr>
+						<td><a href="#"><%= item.이름 %></a>	</td>
+						<td><a href="#"><%= item.상세내용 %></a></td>
+						<td><a href="#"><%= item.업무 %></a></td>
+						<td><a href="#"><%= item.OS_NAME %></a></td>	
+				</tr>
+					<%  }); %>
+			</table>	
+		<!--
+		</section>
+	</div>
+	<footer></footer>
+	-->
+</body>
+</html>

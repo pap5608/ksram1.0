@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link href="./contents.css" rel="stylesheet" type="text/css" />	
+<link href="./css/ui.jqgrid.css" rel="stylesheet" />
+<link href="./css/oranges-in-the-sky.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+body{margin:0px; padding:0px; background:#fff;}
+#cssmenu{position:absolute; top:50px; left:0px; z-index:9999; width:150px; height:50px;}
+#cssmenu .label{padding-left:20px; line-height:50px; font-family:"Arial Black", Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; background:#000; color:#fff; letter-spacing:7px;}
+#cssmenu .menu{display:none;}
+#cssmenu .menu .menu_item{display:block; background:#000; color:#bbb; border-top:1px solid #333; padding:10px 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; text-decoration:none;}
+#cssmenu .menu a.menu_item:hover{background:#333; color:#fff;}
+.content{width:520px; margin:50px auto;}
+-->
+</style>
+<script src="./js/jquery-1.11.0.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./js/i18n/grid.locale-en.js"></script>
+<script src="./js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="./tablesorter-master/jquery.tablesorter.js"></script>
+ <script type="text/javascript" src="./js/jquery.easing.1.3.js"></script>
+ <script src="./js/jquery.filtertable.min.js"></script>
+ <script src="./js/sammy.js"></script>	<!--  클라이언트 부분 routing용   -->
+ <script src="./js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="./css/validationEngine.jquery.css" type="text/css"/>
+<link rel="stylesheet" href="./css/jquery-ui.css" type="text/css"/>
+
+<script type="text/javascript">
+	var linkID;
+	
+	function getData(c_id,ctype) {
+			var selectedid;
+			 if(ctype=="OS") {		     
+				 $.getJSON("/os_list",function(data){
+						var suggestions = [];
+			            $.each(data, function(i, item) {
+			                suggestions.push({
+			                    value: item.이름,
+			                    id:item.id
+			                });
+			          });
+					$("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+						});
+			
+				    }  else if(ctype == "IP") {
+				    	 $.getJSON("/ip_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					          $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//IP selected
+				    } else if(ctype == "NETWORK") {
+				    	 $.getJSON("/network_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					          $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//NETWORK selected
+				    } else if(ctype == "SAN") {
+				    	 $.getJSON("/san_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					           $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//SAN selected
+				    } else if(ctype == "SW") {
+				    	 $.getJSON("/sw_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					           $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//SW selected
+				    } else if(ctype == "디스크") {
+				    	 $.getJSON("/disk_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					           $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//DISK selected
+				    } else if(ctype == "서버") {
+				    	 $.getJSON("/server_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					            $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//서버 selected
+				    }
+				    else if(ctype == "테이프") {
+				    	 $.getJSON("/tape_list",function(data){
+							          var suggestions = [];
+					            $.each(data, function(i, item) {
+					                suggestions.push({
+					                    value: item.이름,
+					                    id:item.ID
+					                });
+					            });
+					           $("#secondName").autocomplete({
+						source:suggestions,
+			      		select: function( event, ui ) {
+			        	selectedid = ui.item.id;
+					      		}
+							});
+					      });	//TAPE selected
+				    } 
+	
+		$("#connectform").submit(function() {
+          	var secondName = $("#secondName").val();
+        	var secondType = $("#secondType").val();
+			var detail1 = $("#detail1").val();
+			var detail2 = $("#detail2").val();
+        	$.post("/connect/"+c_id, { p_id: selectedid, secondName:secondName,secondType:secondType,detail1:detail1,detail2:detail2 }, function(res) {
+				window.location = res;
+        	});
+		});
+		
+			$('#connectform').bind('submit', function(e) {
+   			 e.preventDefault();
+   		 // etc
+   			});
+}
+
+	function discard(id){
+		var result = confirm("진짜 폐기 하겠습니까?");
+		var date = new Date();
+		var now = date.getFullYear() + "/"+ (date.getMonth()+1) + "/"+date.getDate();
+		if(result ==true)
+		{
+				var discardInfo = prompt("폐기정보를 입력하세요.",now + "일 폐기");
+				$.post("/discard/"+id, { discardInfo : discardInfo }, function(res) {
+							alert("정상적으로 폐기되었습니다");
+				});
+		} else {
+			alert("취소되었습니다");
+			return;	
+		}
+		
+	}
+
+	function modify(type, id){
+		if(type=="OS"){
+			$.getJSON('/job',function(data) {
+						var contents;
+						var value;
+					value = $("#osjob").text();
+					$("#osjob").empty();
+					
+					contents="<select>";		
+						data.forEach(function(item, index) {
+								if(item.업무명 == value)
+								{
+									contents+="<option selected>"+item.업무명+"</option>";
+								} else {
+								contents+="<option>"+item.업무명+"</option>";
+								}
+						});
+					contents +="</select>";
+					$("#osjob").append(contents);
+					
+					value = $("#osname").text();
+					$("#osname").empty();
+					$("#osname").append("<textarea name='itemName'>"+value+"</textarea>");
+					value = $("#osdetail").text();
+					$("#osdetail").empty();
+					$("#osdetail").append("<textarea name='itemContents'>"+value+"</textarea>");
+					value = $("#osaccount").text();
+					$("#osaccount").empty();
+					$("#osaccount").append("<textarea name='itemAccount'>"+value+"</textarea>");
+					value = $("#oskind").text();
+					$("#oskind").empty();
+					$("#oskind").append("<textarea name='osType'>"+value+"</textarea>");
+					value = $("#oscpu").text();
+					$("#oscpu").empty();
+					$("#oscpu").append("<textarea name='osCpu'>"+value+"</textarea>");
+					value = $("#osram").text();
+					$("#osram").empty();
+					$("#osram").append("<textarea name='osRam'>"+value+"</textarea>");
+					value = $("#oshdd").text();
+					$("#oshdd").empty();
+					$("#oshdd").append("<textarea name='osHdd'>"+value+"</textarea>");
+					
+			
+		});	//getJSON 끝
+	
+	} // OS 끝
+	else if(type=="SERVER"){
+			$.getJSON('/job',function(data) {
+						var contents;
+						var value;
+					value = $("#serverjob").text();
+					$("#serverjob").empty();
+					
+					contents="<select>";		
+						data.forEach(function(item, index) {
+								if(item.업무명 == value)
+								{
+									contents+="<option selected>"+item.업무명+"</option>";
+								} else {
+								contents+="<option>"+item.업무명+"</option>";
+								}
+						});
+					contents +="</select>";
+					$("#serverjob").append(contents);
+					
+					value = $("#servername").text();
+					$("#servername").empty();
+					$("#servername").append("<textarea name='itemName'>"+value+"</textarea>");
+					value = $("#serverdetail").text();
+					$("#serverdetail").empty();
+					$("#serverdetail").append("<textarea name='itemContents'>"+value+"</textarea>");
+					value = $("#serveretc").text();
+					$("#serveretc").empty();
+					$("#serveretc").append("<textarea name='etc'>"+value+"</textarea>");
+					value = $("#serverhwlevel").text();
+					$("#serverhwlevel").empty();
+					$("#serverhwlevel").append("<textarea name='hwLevel'>"+value+"</textarea>");
+					value = $("#serverhwtype").text();
+					$("#serverhwtype").empty();
+					$("#serverhwtype").append("<textarea name='hwType'>"+value+"</textarea>");
+					value = $("#serverhwvender").text();
+					$("#serverhwvender").empty();
+					$("#serverhwvender").append("<textarea name='hwVender'>"+value+"</textarea>");
+					value = $("#servercpu").text();
+					$("#servercpu").empty();
+					$("#servercpu").append("<textarea name='hwCpu'>"+value+"</textarea>");
+					value = $("#serverram").text();
+					$("#serverram").empty();
+					$("#serverram").append("<textarea name='hwRam'>"+value+"</textarea>");
+					value = $("#serverhdd").text();
+					$("#serverhdd").empty();
+					$("#serverhdd").append("<textarea name='hwHdd'>"+value+"</textarea>");
+					value = $("#serverlocation").text();
+					$("#serverlocation").empty();
+					$("#serverlocation").append("<textarea name='location'>"+value+"</textarea>");
+					
+					
+			
+		});	//getJSON 끝		
+		
+	} //서버 끝
+}
+
+	
+	function assetDisplay(eventname, tablelocation) {
+		$.getJSON(eventname, {type : "asset"},function(data) {
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>자산/유지보수 현황</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>자산내역</td><td>검수일</td><td>자산번호</td><td>유상A/S시작</td><td>유지보수담당자</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		var gumsodate = $.datepicker.formatDate('yy/mm/dd',new Date(item.검수일));
+					       		var asdate = $.datepicker.formatDate('yy/mm/dd',new Date(item.유상AS시작일));
+					       		contents +="<tr><td>" + item.자산내역 + "</td>" + "<td >" + gumsodate + "</td>" + "<td >" + item.자산번호 + "</td>"
+					       		+  "<td >" + asdate + "</td>" + "<td>" + item.유지보수담당+ "</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						}
+			});
+		}  // 자산내역 세부내역 display 끝	
+//	
+		
+	// server 세부내역 DISPLAY 함수			
+			function serverDisplay(eventname, tablelocation)
+			{
+					$.getJSON(eventname, {type : "server"},function(data) {
+				
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>H/W서버</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>서버명</td><td>상세내용</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		contents +="<tr><td>" + item.분류 + "</td>" + "<td ><a href='#/server_list/" + item.C_ID + "'>" + item.이름 + "</a></td>" + "<td>" + item.상세내용+ "</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+
+						}  
+				});	//서버 출력화면 끝
+		}  // 서버 세부내역 display 함수 끝
+		
+		// ip 세부내역 display 함수
+				function ipDisplay(eventname, tablelocation){
+				$.getJSON(eventname, {type : "ip"},function(data) {
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>IP/DNS</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>IP</td><td>DNS</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		contents +="<tr><td>" + item.LINK_TYPE + "</td>" + "<td> <a href='#/ip_list/" + item.P_ID + "'>"+ item.P_NAME + "</a></td>" + "<td>" + item.P_DESC+ "</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							});
+
+						} 
+			});			 //IP 출력화면 끝
+		}		//ip 세부내역 display 함수 끝
+	
+	
+	// SW 세부내역 display 함수
+	function swDisplay(eventname, tablelocation) {	
+		$.getJSON(eventname, {type : "sw"},function(data) {
+				
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>사용 S/W</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>S/W</td><td>용도</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		contents +="<tr><td>" + item.LINK_TYPE + "</td>" + "<td> <a href='#/sw_list/" + item.P_ID + "'>"+ item.P_NAME + "</a></td>" + "<td>" + item.P_DESC+ "</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+										$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						}  							
+		});//소프트웨어 출력화면 끝
+	} // SW 세부내역 함수 끝
+
+//DISK 세부내역 display 함수
+function diskDisplay(eventname, tablelocation){ 
+	$.getJSON(eventname, {type : "disk"},function(data) {
+			
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>외장디스크</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>이름</td><td>상세내용</td><td>용량</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		contents +="<tr><td>" + item.LINK_TYPE + "</td>" + "<td> <a href='#/disk_list/" + item.P_ID + "'>"+ item.P_NAME + "</a></td>" + "<td>" + item.P_DESC+ "</td>"
+					       							+ "<td>" + item.P_ARG1 +"</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						} 
+			});			 //서버 - 디스크 출력화면 끝
+	} //DISK display 함수
+
+//NETWORK display 함수
+		function networkDisplay(eventname, tablelocation) {	
+			$.getJSON(eventname, {type : "network"},function(data) {
+			
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=7>NETWORK 스위치 연결</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>이름</td><td>상세내용</td><td>PORT</td><td>VLAN</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		contents +="<tr><td>" + item.LINK_TYPE + "</td>" + "<td> <a href='#/network_list/" + item.P_ID + "'>"+ item.P_NAME + "</a></td>" + "<td>" + item.P_DESC+ "</td>"
+					       							+ "<td>" + item.P_ARG1 + "<td>" + item.P_ARG2 +"</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						} 
+			});			 //NETWORK 출력화면 끝
+		} 
+		//Network 함수 끝
+
+			
+/////////////////////////////////////////////////////////			
+// os Display 함수 시작
+ function osDisplay(eventname, tablelocation) { 	
+ 	// 			
+	$.getJSON(eventname, {type : "os"},function(data) {
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>연결된 OS</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>HOSTNAME</td><td>상세내용</td></tr>";
+					       data.forEach(function(item, index){
+					       		if(item.LINK_TYPE!=="OS")
+					       		{
+					       			contents +="<tr><td>" + item.분류 + "</td>" + "<td> <a href='#/os_list/" + item.C_ID + "'>"+ item.이름 + "</a></td>" + "<td>" + item.상세내용+ "</td></tr>";
+					       		}
+					       		else
+					       		{
+					       			contents +="<tr><td>" + item.LINK_TYPE + "</td>" + "<td> <a href='#/os_list/" + item.P_ID + "'>"+ item.P_NAME + "</a></td>" + "<td>" + item.P_DESC+ "</td></tr>";
+					       		}
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									console.log(test);
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						} 
+
+			});			 //서버 - OS 출력화면 끝
+ 	
+ }		// OS display 함수 끝
+////////////////////////////////////////
+// SAN 스위치 세부내역 표시 시작
+	function sanDisplay(eventname, tablelocation) {
+			$.getJSON(eventname, {type : "san"},function(data) {	
+					var contents;
+						$("#"+tablelocation).empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=7>SAN 스위치 연결</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>종류</td><td>이름</td><td>상세내용</td><td>PORT</td><td>ZONE</td></tr>";
+					       data.forEach(function(item, index){
+					       		
+					       		contents +="<tr><td>" + item.LINK_TYPE + "</td>" + "<td> <a href='#/san_list/" + item.P_ID + "'>"+ item.P_NAME + "</a></td>" + "<td>" + item.P_DESC+ "</td>"
+					       							+ "<td>" + item.P_ARG1 + "<td>" + item.P_ARG2 +"</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									console.log(test);
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						} 
+			});			 //SAN 출력화면 끝
+		}
+//////
+
+////////////////////////////////////////
+// PORT  세부내역 표시 시작
+	function portDisplay(eventname, tablelocation) {
+			$.getJSON(eventname, {type : "port"},function(data) {	
+					var contents;
+					var address;
+						$("#"+tablelocation).empty();
+						
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=7>포트 사용 현황</th></tr></thead><tbody>";
+							$("#"+tablelocation).append(title);
+							contents += "<tr><td>PORT</td><td>VLAN</td><td>종류</td><td>이름</td><td>상세내용</td></tr>";
+					       data.forEach(function(item, index){
+								if(item.분류=="서버")
+								{
+									address = "server_list/"+item.C_ID;
+								}
+								else if(item.분류=="OS")
+								{
+									address = "os_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="SW")
+								{
+									address = "sw_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="NETWORK")
+								{
+									address = "network_list/"+item.C_ID;
+								
+									
+								}
+								else if(item.분류=="SAN")
+								{
+									address = "san_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="IP")
+								{
+									address = "ip_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="디스크")
+								{
+									address = "disk_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="테이프")
+								{
+									address = "tape_list/"+item.C_ID;
+								
+								}	
+					    
+					       		contents +="<tr><td>" + item.P_ARG1 + "</td>" + "<td>"+ item.P_ARG2 + "</a></td>" + "<td>" + item.분류+ "</td>"
+					       							+ "<td><a href='#/"+ address + "'>" + item.이름 + "</a></td><td>" + item.상세내용 +"</td></tr>";
+					    		   							
+					       });
+    				       	contents +="</tbody>"; 
+							$("#"+tablelocation).append(contents);
+							$("#"+tablelocation+" tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									console.log(test);
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						} 
+			});			 //port 출력화면 끝
+		}
+		
+//연결 정보 생성 기능
+			function addConnect(c_id,tablelocation){
+				$.getJSON("/type",function(data){
+					var contents;
+					$("#"+tablelocation).empty();
+					var title = "<thead><tr> <th colspan=5>연결 장비</th></tr></thead><tbody>";
+					$("#"+tablelocation).append(title);
+					contents += "<tr><td>종류</td><td>이름</td><td>상세내용1</td><td>상세내용2</td></tr>";
+			        contents += "<td><select name='secondType' id='secondType'>";
+			     	data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+					});
+			        contents += "</select></td>" + "<td>" + "<input id='secondName' required>" 
+					+ "</td>" + "<td><textarea name='detail1' id='detail1'></textarea></td>"  + "<td><textarea name='detail2' id='detail2'></textarea></td>"+ "</tr>";
+			       	contents +="</tbody>";
+					$("#"+tablelocation).append(contents);
+					$(":submit").remove();
+					var submitbox = "<input type='submit' id='connectsubmit'>";
+					$("#connectform").append(submitbox);
+					$("#secondType").on("change",function(){
+							var selected = $("#secondType option:selected").val();
+							getData(c_id,selected);
+						});		
+	
+				});
+				
+		}
+		
+		
+		
+		
+
+	function tableRefresh(){
+		$("#grid").empty();
+		$("#secondgrid").empty();
+		$("#thirdgrid").empty();
+		$("#fourthgrid").empty();
+		$("#fifthgrid").empty();
+		$("#sixthgrid").empty();
+		$("#seventhgrid").empty();
+		$("table").empty();
+		$("button").empty();
+		$("#front_button_div").empty();
+
+	}
+
+function FloatMenu(){
+	var animationSpeed=1500;
+	var animationEasing='easeOutQuint';
+	var scrollAmount=$(document).scrollTop();
+	var newPosition=menuPosition+scrollAmount;
+	if($(window).height()<$('#cssmenu').height()+$('#cssmenu .menu').height()){
+		$('#cssmenu').css('top',menuPosition);
+	} else {
+		$('#cssmenu').stop().animate({top: newPosition}, animationSpeed, animationEasing);
+	}
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//함수 선언부 끝!!!!!!!!!!!!
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////
+
+
+
+$(window).load(function() {
+	menuPosition=$('#cssmenu').position().top;
+	FloatMenu();
+});
+$(window).scroll(function () { 
+	FloatMenu();
+});
+var clientrouter = Sammy(function() {
+
+/////
+///////////////////////////////////////////////////////
+//// os리스트 호출 부분
+	///			
+			this.get('#/os_list', function (){
+					tableRefresh();								
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/os'>OS추가</a></button>");
+					$.getJSON('/os_list', function(data) {
+								$("#grid").empty();
+								var contents;
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>OS이름</th>	</tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);	
+								data.forEach(function(item, index) {
+								contents += '<tr>';
+								contents += 		'<td><a href="#/os_list/' + item.id + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.os_name +'</td>';
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+										$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+							
+							
+					});  //os_list event 받아서 처리		
+			});
+	///////////////////////////////////////////////////////////
+		///  OS 리스트 호출 부분 끝. ////////////////////////		
+		
+				this.get("#/server_list", function() {
+						// server 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+					tableRefresh();
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/server'>서버추가</a></button>");
+					$.getJSON('/server_list', function(data) {
+								var contents;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>H/W모델</th></tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/server_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.HW_NAME +'</td>';
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //server_list json 받아서 처리
+							
+					
+				}); //Server_LIST 끝
+				
+				
+				
+	//
+	//// DISK 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+				this.get("#/disk_list",function(){
+				tableRefresh();
+				$("#front_button_div button").remove();
+				$("#front_button_div").prepend("<button id = 'add'><a href='#/add/disk'>디스크추가</a></button>");	
+				
+					$.getJSON('/disk_list', function(data) {
+								var contents;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>H/W모델</th><th>H/W벤더</th><th>H/W레벨</th>" +
+								                "<th>전체(GB)</th><th>가용(GB)</th><th>설치위치</th></tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+									
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/disk_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.HW_NAME +'</td>';
+								contents += 		'<td>' + item.HW_VENDER +'</td>';
+								contents += 		'<td>' + item.HW_LEVEL +'</td>';
+								contents += 		'<td>' + item.전체공간 +'</td>';
+								contents += 		'<td>' + item.가용공간 +'</td>';
+								contents += 		'<td>' + item.설치위치 +'</td>';
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //disk_list event 받아서 처리
+				});
+			///  DISK 리스트 호출 부분 끝. ////////////////////////
+	
+		this.get("#/network_list", function(){
+				// NETWORK 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+					tableRefresh();
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/network'>NETWORK추가</a></button>");
+					$.getJSON('/network_list', function(data) {
+								var contents;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>H/W모델</th><th>H/W벤더</th><th>PORT</th>" +
+								                "<th>설치위치</th></tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+									
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/network_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.HW_NAME +'</td>';
+								contents += 		'<td>' + item.HW_VENDER +'</td>';
+								contents += 		'<td>' + item.PORT +'</td>';
+								contents += 		'<td>' + item.설치위치 +'</td>';
+								
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //network_list event 받아서 처리
+			});
+			
+			this.get("#/san_list",function(){
+			// SAN 스위치 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+					tableRefresh();
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/san'>SAN 스위치추가</a></button>");
+					$.getJSON('/san_list', function(data) {
+								var contents;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>H/W모델</th><th>H/W벤더</th><th>PORT</th>" +
+								                "<th>설치위치</th></tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+									
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/san_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.HW_NAME +'</td>';
+								contents += 		'<td>' + item.HW_VENDER +'</td>';
+								contents += 		'<td>' + item.PORT +'</td>';
+								contents += 		'<td>' + item.설치위치 +'</td>';
+								
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //network_list event 받아서 처리
+			});
+	///  SAN 스위치리스트 호출 부분 끝. ////////////////////////
+		this.get("#/sw_list",function() {
+		// S/W 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+					tableRefresh();
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/sw'>SW 추가</a></button>");
+					$.getJSON('/sw_list', function(data) {
+								var contents;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>S/W벤더</th><th>S/W라이선스</th>" +
+								                "</tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/sw_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.SW_VENDER +'</td>';
+								contents += 		'<td>' + item.SW_LICENSE +'</td>';
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //sw_list event 받아서 처리
+			});
+	///  SW 스위치리스트 호출 부분 끝. ////////////////////////	
+		this.get("#/ip_list",function(){
+				// IP/DNS 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+					tableRefresh();
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/ip'>IP 추가</a></button>");
+					$.getJSON('/ip_list', function(data) {
+								var contents;
+								var address;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>IP</th> <th>대상장비</th> <th>DNS</th> " +
+								                "</tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+									if(item.C_분류=="서버")
+									{
+										address = "server_list/"+item.C_ID;			
+									}
+									else if(item.C_분류=="OS")
+									{
+										address = "os_list/"+item.C_ID;
+									
+									}
+									else if(item.C_분류=="SW")
+									{
+										address = "sw_list/"+item.C_ID;
+									
+									}
+									else if(item.C_분류=="NETWORK")
+									{
+										address = "network_list/"+item.C_ID;
+									
+										
+									}
+									else if(item.C_분류=="SAN")
+									{
+										address = "san_list/"+item.C_ID;
+									
+									}
+									else if(item.C_분류=="IP")
+									{
+										address = "ip_list/"+item.C_ID;
+									
+									}
+									else if(item.C_분류=="디스크")
+									{
+										address = "disk_list/"+item.C_ID;
+									
+									}
+									else if(item.C_분류=="테이프")
+									{
+										address = "tape_list/"+item.C_ID;
+									
+									}	
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/ip_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td><a href="#/'+ address +'">' + item.C_이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용+'</td>';
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //ip_list event 받아서 처리
+			});
+	///  IP 스위치리스트 호출 부분 끝. ////////////////////////
+	
+	this.get("#/tape_list",function(){
+	// 백업/TAPE 리스트 불러오는 부분
+	/////////////////////////////////////////////////////////////
+					tableRefresh();
+					$("#front_button_div button").remove();
+					$("#front_button_div").prepend("<button id = 'add'><a href='#/add/tape'>백업장치 추가</a></button>");
+					$.getJSON('/tape_list', function(data) {
+								var contents;
+								$("#grid").empty();
+								var title = "<thead><tr> <th>이름</th> <th>상세내용</th> <th>업무</th> <th>H/W모델</th><th>H/W벤더</th><th>H/W레벨</th>" +
+								                "<th>전체(GB)</th><th>가용(GB)</th><th>설치위치</th></tr></thead>";
+								title += "<tbody>";
+								$("#grid").append(title);
+																
+								data.forEach(function(item, index) {
+									
+								contents += '<tr>';
+								contents += 		'<td> <a href="#/tape_list/' + item.ID + '">' + item.이름 +'</a></td>';
+								contents += 		'<td>' + item.상세내용 +'</td>';
+								contents += 		'<td>' + item.업무+'</td>';
+								contents += 		'<td>' + item.HW_NAME +'</td>';
+								contents += 		'<td>' + item.HW_VENDER +'</td>';
+								contents += 		'<td>' + item.HW_LEVEL +'</td>';
+								contents += 		'<td>' + item.전체공간 +'</td>';
+								contents += 		'<td>' + item.가용공간 +'</td>';
+								contents += 		'<td>' + item.설치위치 +'</td>';
+								
+								contents += '</tr>';
+								
+							});
+							contents +="</tbody>"; 
+							$("#grid").append(contents);
+							$("#grid tr").find("td").each(function() {
+ 							 var test = $(this).text();
+								if(test=="null")
+								{
+									console.log(test);
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+							$("#grid").tablesorter();
+							$('#grid').filterTable();
+					});  //tape_list event 받아서 처리
+			});
+	///  TAPE 리스트 호출 부분 끝. ////////////////////////
+	
+		this.get("#/",function(){
+			tableRefresh();
+			$.getJSON('/');
+		});
+		
+		this.get("#/os_list/:id",function(){
+				tableRefresh();
+				var paramID = this.params['id'];
+				$("#add").remove();
+				$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+				var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+				var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+				$("#front_button_div").append(discardbutton);
+				$("#front_button_div").append(modifybutton);
+				$("#discardbutton").click(function() {
+					discard(paramID);
+				});
+				$("#modifybutton").click(function() {
+					modify("OS",paramID);
+				});
+				var eventname = "os_list/"+this.params['id'];
+				
+				$.getJSON(eventname,{type : "os"} ,function(data) {
+////////////////////
+///  기본화면 출력
+//////////									
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>ID/PW</td></tr>";
+								contents +="<tr><td id='ostype'>" + data[0].분류 + "</td>" + "<td id='osjob'>" + data[0].업무 + "</td>" + "<td id='osname'>" + data[0].이름 + "</td>" + "<td id='osdetail'>" + data[0].상세내용 
+								+ "</td>" + "<td id='osaccount'>" + data[0].account + "</td></tr>";
+								contents += "<tr><td>O/S종류</td><td>CPU</td><td>RAM</td><td>HDD</td></tr>";
+								contents +="<tr><td id='oskind'>" + data[0].os_name + "</td>" + "<td  id='oscpu'>" + data[0].cpu + "</td>" + "<td id='osram'>" + data[0].ram + "</td>" + "<td id='oshdd'>" + data[0].hdd + "</td></tr>";
+								contents +="</tbody>";
+								$("#grid").append(contents);								               
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+			});
+///////////////////////////////////////////////
+//
+//		OS - 서버 출력화면
+			serverDisplay(eventname, "secondgrid");			
+///////////////////////////////////////////////
+//
+//		IP 출력화면
+//////////////////////////////								
+		ipDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////
+//
+//		소프트웨어 출력화면
+	swDisplay(eventname, "fourthgrid");			
+	});
+/////////////////////////	/	
+//SERVER LIST 세부내역 출력		
+///		///////////////////////
+	this.get("#/server_list/:id",function(){
+			tableRefresh();
+			$("#add").remove();
+			$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+			var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("SERVER",paramID);
+			});
+			var eventname = "server_list/"+this.params['id'];
+			$.getJSON(eventname,{type : "server"} ,function(data) {
+////////////////////
+///  기본화면 출력 - 서버
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>기타</td><td>H/W레벨</td></tr>";
+								contents +="<tr><td id='servertype'>" + data[0].분류 + "</td>" + "<td id='serverjob'>" + data[0].업무 + "</td>" + "<td id='servername'>" + data[0].이름 + "</td>" + "<td id='serverdetail'>" + data[0].상세내용 
+								+ "</td>" + "<td id='serveretc'>" + data[0].기타 + "</td>" + "<td id='serverhwlevel'>" + data[0].HW_LEVEL + "</td> </tr>";
+								contents += "<tr><td>H/W종류</td><td>H/W벤더</td><td>CPU</td><td>RAM</td><td>HDD</td><td>설치위치</td></tr>";
+								contents +="<tr><td id='serverhwtype'>" + data[0].HW_NAME + "</td>" + "<td id='serverhwvender'>" + data[0].HW_VENDER + "</td>" 
+								                 + "<td id='servercpu'>" + data[0].CPU + "</td>" + "<td id='serverram'>" + data[0].RAM + "</td>" + "<td id='serverhdd'>" + data[0].HDD + "</td>"+ "<td id='serverlocation'>" + data[0].설치위치 + "</td></tr>";
+								contents +="</tbody>";
+								$("#grid").append(contents);								               
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+			});
+///////////////////////////////////////////////
+//
+//		서버---자산유지보수 출력화면
+//////////////////////////////
+		assetDisplay(eventname, "secondgrid");
+		
+//		서버 -- 디스크 출력화면
+//////////////////////////////								
+
+		diskDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////////////////////////////////
+//
+// 서버 - IP 출력화면 시작
+		ipDisplay(eventname, "fourthgrid");			
+///////////////////////////////////////////////			
+///
+//
+//		서버 -- NETWORK 출력화면
+//////////////////////////////								
+		networkDisplay(eventname, "fifthgrid");
+///////////////////////////////////////////////////////////////////////////
+//
+// 서버 - OS 출력화면 시작			
+		osDisplay(eventname, "sixthgrid");
+///////////////////////////////////////////////			
+///
+//		서버 -- SAN 출력화면
+//////////////////////////////
+		sanDisplay(eventname,"seventhgrid");
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
+//
+	
+		});		//SERVER_LIST 부분 끝		
+	
+	this.get("#/disk_list/:id",function(){
+			tableRefresh();
+			$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+			var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("DISK",paramID);
+			});
+			var eventname = "disk_list/"+this.params['id'];
+			$.getJSON(eventname,{type : "disk"} ,function(data) {
+////////////////////
+///  기본화면 출력 - 서버
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td colspan=2>상세내용</td><td colspan=2>ID/PW</td></tr>";
+								contents +="<tr><td id='disktype'>디스크</td>" + "<td id='diskjob'>" + data[0].업무 + "</td>" + "<td id='diskname'>" + data[0].이름 + "</td>" + "<td colspan=2 id='diskdetail'>" + data[0].상세내용 
+								+ "</td>" + "<td colspan=2 id='diskaccount'>" + data[0].ACCOUNT + "</td>"  + "</tr>";
+								contents += "<tr><td>H/W종류</td><td>H/W벤더</td><td>H/W모델</td><td>전체공간</td><td>가용공간</td><td>설치위치</td><td>기타</td></tr>";
+								contents +="<tr><td id='diskhwtype'>" + data[0].HW_LEVEL + "</td>" + "<td id='diskhwvender'>" + data[0].HW_VENDER + "</td>" + "<td id='diskhwmodel'>" + data[0].HW_NAME + "</td>" 
+								                 + "<td id='disktotalspace'>" + data[0].전체공간 + "</td>" + "<td id='diskfreespace'>" + data[0].가용공간 + "</td>" + "<td id='disklocation'>" + data[0].설치위치 + "</td>"+ "<td id='disketc'>" + data[0].기타 + "</td></tr>";
+								contents += "<tr><td colspan=7>상세구성</td></tr>";
+								contents +="<tr><td colspan=7 id='diskdetail'>" + data[0].상세구성 + "</td>" 
+								                 +"</tr>";                 
+								contents +="</tbody>";
+								$("#grid").append(contents);
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기								               
+									
+			});
+///////////////////////////////////////////////
+//
+//		디스크---자산유지보수 출력화면
+//////////////////////////////
+		assetDisplay(eventname, "secondgrid");
+		
+//		디스크 -- NETWORK 출력화면
+//////////////////////////////								
+		networkDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////////////////////////////////
+//
+
+//		디스크 -- SAN 출력화면
+//////////////////////////////
+		sanDisplay(eventname,"fourthgrid");
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
+//
+//		
+// 디스크 - OS 출력화면 시작			
+				osDisplay(eventname, "fifthgrid");
+		///////////////////////////////////////////////			
+				});
+					//DISK_LIST 부분 끝
+//////////////////////////////////////////////////////					
+// NETWORK ROUTING
+//				
+/////////////////////////////////////////////////////////
+		this.get("#/network_list/:id",function(){
+			tableRefresh();
+			$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+			var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("NETWORK",paramID);
+			});
+			var eventname = "network_list/"+this.params['id'];
+				$.getJSON(eventname,{type : "network"} ,function(data) {
+////////////////////
+///  기본화면 출력 - 네트워크
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>ID/PW</td></tr>";
+								contents +="<tr><td id='networktype'>" +  data[0].분류 + "</td> <td id='networkjob'>" + data[0].업무 + "</td>" + "<td id='networkname'>" + data[0].이름 + "</td>" + "<td id='networkdetail'>" + data[0].상세내용 
+								+ "</td>" + "<td id='networkaccount'>" + data[0].ACCOUNT + "</td>"  + "</tr>";
+								contents += "<tr><td>H/W벤더</td><td>H/W모델</td><td>PORT구성</td><td>설치위치</td><td>기타</td></tr>";
+								contents +="<tr><td id='networkhwvender'>" + data[0].HW_VENDER + "</td>" + "<td id='networkhwmodel'>" + data[0].HW_NAME + "</td>" 
+								                 + "<td id='networkport'>" + data[0].PORT + "</td>" + "<td id='networklocation'>" + data[0].설치위치 + "</td>"+ "<td id='networketc'>" + data[0].기타 + "</td></tr>";                 
+								contents +="</tbody>";
+								$("#grid").append(contents);
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+			
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기								               
+									
+			});
+///////////////////////////////////////////////
+//
+//		네트워크---자산유지보수 출력화면
+//////////////////////////////
+		assetDisplay(eventname, "secondgrid");
+		
+//		네트워크-- port 출력화면
+//////////////////////////////								
+		portDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////////////////////////////////
+			});//네트워크 Routing 끝
+
+/////
+//
+	this.get("#/san_list/:id",function(){
+		tableRefresh();
+		$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+		var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("SAN",paramID);
+			});
+		var eventname = "san_list/"+this.params['id'];
+		$.getJSON(eventname,{type : "san"} ,function(data) {
+////////////////////
+///  기본화면 출력 - SAN
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>ID/PW</td></tr>";
+								contents +="<tr><td id='santype'>" +  data[0].분류 + "</td> <td id='sanjob'>" + data[0].업무 + "</td>" + "<td id='sanname'>" + data[0].이름 + "</td>" + "<td id='sandetail'>" + data[0].상세내용 
+								+ "</td>" + "<td id='sanaccount'>" + data[0].ACCOUNT + "</td>"  + "</tr>";
+								contents += "<tr><td>H/W벤더</td><td>H/W모델</td><td>PORT구성</td><td>설치위치</td><td>기타</td></tr>";
+								contents +="<tr><td id='sanhwvender'>" + data[0].HW_VENDER + "</td>" + "<td id='sanhwmodel'>" + data[0].HW_NAME + "</td>" 
+								                 + "<td id='sanport'>" + data[0].PORT + "</td>" + "<td id='sanlocation'>" + data[0].설치위치 + "</td>"+ "<td id='sanetc'>" + data[0].기타 + "</td></tr>";                 
+								contents +="</tbody>";
+								$("#grid").append(contents);
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기								               
+									
+			});
+///////////////////////////////////////////////
+//
+//		SAN---자산유지보수 출력화면
+//////////////////////////////
+		assetDisplay(eventname, "secondgrid");
+		
+//		SAN-- port 출력화면
+//////////////////////////////								
+		portDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////////////////////////////////
+//
+		});//SAN스위치  ROUTING 끝 
+	
+	this.get("#/sw_list/:id",function(){
+			tableRefresh();
+			$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+			var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("SW",paramID);
+			});
+			var eventname = "sw_list/"+this.params['id'];
+			$.getJSON(eventname,{type : "sw"} ,function(data) {
+////////////////////
+///  기본화면 출력 - SW
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>S/W벤더</td></tr>";
+								contents +="<tr><td id='swtype'>" +  data[0].분류 + "</td> <td id='swjob'>" + data[0].업무 + "</td>" + "<td id='swname'>" + data[0].이름 + "</td>" + "<td id='swdetail'>" + data[0].상세내용 
+								+ "</td>" + "<td id='swvender'>" + data[0].SW_VENDER + "</td>"  + "</tr>";
+								contents += "<tr><td colspan=7>S/W라이센스</td></tr>";
+								contents +="<tr><td id='swlicense'>" + data[0].SW_LICENSE + "</td></tr>";                 
+								contents +="</tbody>";
+								$("#grid").append(contents);
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기	
+															              									
+			});
+///////////////////////////////////////////////
+//
+//		SW---자산유지보수 출력화면
+//////////////////////////////
+		assetDisplay(eventname, "secondgrid");
+		
+//		SW-- OS 출력화면
+//////////////////////////////								
+		osDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////////////////////////////////
+//
+		});
+
+	this.get("#/ip_list/:id",function(){
+			tableRefresh();
+			$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+			var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("IP",paramID);
+			});
+			var eventname = "ip_list/"+this.params['id'];
+			$.getJSON(eventname,{type : "ip"} ,function(data) {
+////////////////////
+///  기본화면 출력 - IP
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>IP</td><td>DNS</td></tr>";
+								contents +="<tr><td id='iptype'>" +  data[0].분류 + "</td> <td id='ipname'>" + data[0].이름 + "</td><td id='ipdetail'>" + data[0].상세내용 + "</td></tr>";
+								contents +="</tbody>";
+								$("#grid").append(contents);
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+									
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기								               
+					
+			
+						});
+//		IP-- 연결된장비 출력화면
+//////////////////////////////								
+		$.getJSON(eventname, {type : "connectingip"},function(data) {
+					var contents;
+					var address;
+						$("#secondgrid").empty();
+						if(data.length>0)
+						{
+							var title = "<thead><tr> <th colspan=5>연결된 장비들</th></tr></thead><tbody>";
+							$("#secondgrid").append(title);
+							contents += "<tr><td>종류</td><td>이름</td><td>상세내용</td></tr>";
+					       data.forEach(function(item, index){
+					       			if(item.분류=="서버")
+								{
+									address = "server_list/"+item.C_ID;			
+								}
+								else if(item.분류=="OS")
+								{
+									address = "os_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="SW")
+								{
+									address = "sw_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="NETWORK")
+								{
+									address = "network_list/"+item.C_ID;
+								
+									
+								}
+								else if(item.분류=="SAN")
+								{
+									address = "san_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="IP")
+								{
+									address = "ip_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="디스크")
+								{
+									address = "disk_list/"+item.C_ID;
+								
+								}
+								else if(item.분류=="테이프")
+								{
+									address = "tape_list/"+item.C_ID;
+								
+								}	
+					    
+					       		contents +="<tr><td>" + item.분류 + "</td>" + "<td> <a href='#/" + address+ "'>"+ item.이름 + "</a></td><td>" + item.상세내용 + "</td></tr>";
+					       });
+    				       	contents +="</tbody>"; 
+							$("#secondgrid").append(contents);
+							$("#secondgrid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+							
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기
+						} 
+			});			 //연결된 장비 출력화면 끝		
+		});
+		
+			this.get("#/tape_list/:id",function(){
+			tableRefresh();
+			$("#front_button_div").append("<button id = 'connect'><a href='#/connect/"+this.params['id'] + "'>연결장비추가</a></button>");
+			var paramID = this.params['id'];
+			var discardbutton = "<input type='button' id='discardbutton' style='float: right;'  value='폐기' >";
+			var modifybutton = "<input type='button' id='modifybutton' style='float: right;'  value='수정' >";
+			$("#front_button_div").append(discardbutton);
+			$("#front_button_div").append(modifybutton);
+			$("#discardbutton").click(function() {
+				discard(paramID);
+			});
+			$("#modifybutton").click(function() {
+				modify("TAPE",paramID);
+			});
+			var eventname = "tape_list/"+this.params['id'];
+			$.getJSON(eventname,{type : "tape"} ,function(data) {
+////////////////////
+///  기본화면 출력 - 서버
+//////////			
+							var contents;
+							$("#grid").empty();
+								var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+								$("#grid").append(title);
+								contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td colspan=2>상세내용</td><td colspan=2>ID/PW</td></tr>";
+								contents +="<tr><td id='tapetype'>테이프</td>" + "<td id='tapejob'>" + data[0].업무 + "</td>" + "<td id='tapename'>" + data[0].이름 + "</td>" + "<td colspan=2 id='tapedetail'>" + data[0].상세내용 
+								+ "</td>" + "<td colspan=2 id='tapeaccount'>" + data[0].ACCOUNT + "</td>"  + "</tr>";
+								contents += "<tr><td>H/W종류</td><td>H/W벤더</td><td>H/W모델</td><td>전체공간</td><td>가용공간</td><td>설치위치</td><td>기타</td></tr>";
+								contents +="<tr><td id='tapehwtype'>" + data[0].HW_LEVEL + "</td>" + "<td id='tapehwvender'>" + data[0].HW_VENDER + "</td>" + "<td id='tapehwmodel'>" + data[0].HW_NAME + "</td>"
+								                 + "<td id='tapetotalspace'>" + data[0].전체공간 + "</td>" + "<td id='tapefreespace'>" + data[0].가용공간 + "</td>" + "<td id='tapelocation'>" + data[0].설치위치 + "</td>"+ "<td id='tapeetc'>" + data[0].기타 + "</td></tr>";
+								contents += "<tr><td colspan=7>상세구성</td></tr>";
+								contents +="<tr><td colspan=7 id='tapedetail'>" + data[0].상세구성 + "</td>" 
+								                 +"</tr>";                 
+								contents +="</tbody>";
+								$("#grid").append(contents);
+								$("#grid tr").find("td").each(function() {
+ 							 	var test = $(this).text();
+								if(test=="null")
+								{
+								
+									$(this).html(" ");
+								}
+																	
+							}); //NULL을 공백으로 바꾸기								      
+					});         
+						///////////////////////////////////////////////
+//
+//	 TAPE---자산유지보수 출력화면
+//////////////////////////////
+		assetDisplay(eventname, "secondgrid");
+		
+//		TAPE -- NETWORK 출력화면
+//////////////////////////////								
+		networkDisplay(eventname, "thirdgrid");
+///////////////////////////////////////////////////////////////////////////
+//
+
+//		TAPE -- SAN 출력화면
+//////////////////////////////
+		sanDisplay(eventname,"fourthgrid");
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////
+//
+//		
+// TAPE - OS 출력화면 시작			
+		osDisplay(eventname, "fifthgrid");
+///////////////////////////////////////////////			
+		});//TAPE_LIST 부분 끝		
+
+//폼 추가 부분
+		this.get("#/add/:type",function(){
+				var contents;
+				var type = this.params['type'];
+			if(type=="os")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>ID/PW</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" + "<td>" + "<textarea name='itemAccount'></textarea>" + "</td></tr>";
+					contents += "<tr><td>O/S종류</td><td>CPU</td><td>RAM</td><td>HDD</td></tr>";
+					contents +="<tr><td>" + "<textarea name='osType'></textarea>" + "</td>" + "<td>" + "<textarea name='osCpu'></textarea>" + "</td>" 
+					+ "<td>" + "<textarea name='osRam'></textarea>" + "</td>" + "<td>" + "<textarea name='osHdd'></textarea>" + "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									
+									return $(this).text() =="OS";
+					}).prop('selected', true);						               
+				});		
+//////연결된 장비
+				$("#main_form").attr('action',"/os_list");
+				$(":submit").remove();			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+			} //OS추가 끝
+			else if(type=="server")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>기타</td><td>H/W레벨</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" +"<td><textarea name='etc'></textarea>"+ "</td>"+ "<td>" + "<textarea name='hwLevel'></textarea>" + "</td></tr>";
+					contents += "<tr><td>H/W종류</td><td>H/W벤더</td><td>CPU</td><td>RAM</td><td>HDD</td><td>설치위치</td></tr>";
+					contents +="<tr><td>" + "<textarea name='hwType'></textarea>" + "</td>" + "<td>" + "<textarea name='hwVender'></textarea>" + "</td>" 
+					+ "<td>" + "<textarea name='hwCpu'></textarea>" + "</td>" + "<td>" + "<textarea name='hwRam'></textarea></td>" 
+					+ "<td>" + "<textarea name='hwHdd'></textarea></td>" +  "<td>" + "<textarea name='location'></textarea>" + "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									
+									return $(this).text() =="서버";
+					}).prop('selected', true);						               
+				});		
+//////연결된 장비
+				$("#main_form").attr('action',"/server_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+			} //SERVER추가 끝
+/////////////////////////			
+///	     DISK 추가부분 시작
+/////////////////////////////////////////
+			else if(type=="disk")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td colspan=2>상세내용</td><td colspan=2>ID/PW</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td colspan=2>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" +"<td colspan=2><textarea name='itemAccount'></textarea>"+ "</td></tr>";
+					contents += "<tr><td>H/W종류</td><td>H/W벤더</td><td>H/W모델</td><td>전체공간</td><td>가용공간</td><td>설치위치</td><td>기타</td></tr>";
+					contents +="<tr><td>" + "<textarea name='hwLevel'></textarea>" + "</td>" + "<td>" + "<textarea name='hwVender'></textarea>" + "</td>" 
+					+ "<td>" + "<textarea name='hwType'></textarea>" + "</td>" + "<td>" + "<textarea name='totalSpace'></textarea></td>" 
+					+ "<td>" + "<textarea name='freeSpace'></textarea></td>" + "<td>" + "<textarea name='location'></textarea></td>" +  "<td>" + "<textarea name='etc'></textarea>" + "</td></tr>";
+					contents += "<tr><td colspan=7>상세구성</td></tr>";
+					contents += "<tr><td colspan=7><textarea name='itemDetail'></textarea>"+ "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									console.log($(this).text());
+									return $(this).text() =="디스크";
+					}).prop('selected', true);						               
+				});		
+//////연결된 장비
+		
+				$("#main_form").attr('action',"/disk_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+			} //DISK추가 끝
+/////////////////////////////////////
+//// NETWORK 추가 시작
+////////////////////
+			else if(type=="network")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>ID/PW</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" + "<td>" + "<textarea name='itemAccount'></textarea>" + "</td></tr>";
+					contents += "<tr><td>H/W벤더</td><td>H/W모델</td><td>PORT구성</td><td>설치위치</td><td>기타</td></tr>";
+					contents +="<tr><td>" + "<textarea name='hwVender'></textarea>" + "</td>" + "<td>" + "<textarea name='hwType'></textarea>" + "</td>" 
+					+ "<td>" + "<textarea name='port'></textarea>" + "</td>" +"<td>" + "<textarea name='location'></textarea>" + "</td><td>" + "<textarea name='etc'></textarea>" + "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									return $(this).text() =="NETWORK";
+					}).prop('selected', true);						               
+				});	
+				//////연결된 장비
+
+				$("#main_form").attr('action',"/network_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+		}
+
+/////////////////////////////////////
+//// SAN 추가 시작
+////////////////////
+			else if(type=="san")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>ID/PW</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" + "<td>" + "<textarea name='itemAccount'></textarea>" + "</td></tr>";
+					contents += "<tr><td>H/W벤더</td><td>H/W모델</td><td>PORT구성</td><td>설치위치</td><td>기타</td></tr>";
+					contents +="<tr><td>" + "<textarea name='hwVender'></textarea>" + "</td>" + "<td>" + "<textarea name='hwType'></textarea>" + "</td>" 
+					+ "<td>" + "<textarea name='port'></textarea>" + "</td>" +"<td>" + "<textarea name='location'></textarea>" + "</td><td>" + "<textarea name='etc'></textarea>" + "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									return $(this).text() =="SAN";
+					}).prop('selected', true);						               
+				});	
+				//////연결된 장비
+
+				$("#main_form").attr('action',"/san_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+		}
+/////////////////////////////////////
+//// SW 추가 시작
+////////////////////
+			else if(type=="sw")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td>상세구성</td><td>S/W벤더</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" + "<td>" + "<textarea name='swVender'></textarea>" + "</td></tr>";
+					contents += "<tr><td colspan=7>S/W라이센스</td></tr>";
+					contents +="<tr><td colspan=7>" + "<textarea name='swLicense'></textarea>" + "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									return $(this).text() =="SW";
+					}).prop('selected', true);						               
+				});	
+				//////연결된 장비
+
+				$("#main_form").attr('action',"/sw_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+		}	//SW 추가 끝
+////////////////
+//	IP 추가부분
+			else if(type=="ip")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=5>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>IP</td><td>DNS</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea></td>" 
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									return $(this).text() =="IP";
+					}).prop('selected', true);						   
+				});
+/*				
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" + "<td>" + "<textarea name='swVender'></textarea>" + "</td></tr>";
+					contents += "<tr><td colspan=7>S/W라이센스</td></tr>";
+					contents +="<tr><td colspan=7>" + "<textarea name='swLicense'></textarea>" + "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									return $(this).text() =="SW";
+					}).prop('selected', true);						               
+				});
+					
+				//////연결된 장비
+				$.getJSON('/job',function(data) {
+					addConnect("secondgrid");
+							});
+*/		
+								
+				$("#main_form").attr('action',"/ip_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+		}	//IP 추가 끝
+/////////////////////////			
+///	     TAPE 추가부분 시작
+/////////////////////////////////////////
+			else if(type=="tape")
+			{		
+		// 장비종류 가져오는부분
+			$.getJSON('/type',function(data) {
+				tableRefresh();
+				$("#grid").empty();
+				var title = "<thead><tr> <th colspan=7>기본 정보</th></tr></thead><tbody>";
+				$("#grid").append(title);
+				contents += "<tr><td>종류</td><td>업무</td><td>이름</td><td colspan=2>상세내용</td><td colspan=2>ID/PW</td></tr>";
+				contents +="<tr><td>";
+					contents += "<select name='type' id='type'>";
+						data.forEach(function(item, index) {
+							contents+="<option>"+item.분류명+"</option>";
+						});
+					contents +="</select></td>";
+					
+				});
+			// 업무명가져오는 부분
+			$.getJSON('/job',function(data) {
+						contents += "<td>";
+						contents += "<select name='job' id='job' selected>";
+						data.forEach(function(item, index) {
+								contents+="<option>"+item.업무명+"</option>";
+						});
+					contents +="</select></td>";
+					contents += "<td><textarea name='itemName'></textarea>"+ "</td>" + "<td colspan=2>" + "<textarea name='itemContents'></textarea>" 
+					+ "</td>" +"<td colspan=2><textarea name='itemAccount'></textarea>"+ "</td></tr>";
+					contents += "<tr><td>H/W종류</td><td>H/W벤더</td><td>H/W모델</td><td>전체공간</td><td>가용공간</td><td>설치위치</td><td>기타</td></tr>";
+					contents +="<tr><td>" + "<textarea name='hwLevel'></textarea>" + "</td>" + "<td>" + "<textarea name='hwVender'></textarea>" + "</td>" 
+					+ "<td>" + "<textarea name='hwType'></textarea>" + "</td>" + "<td>" + "<textarea name='totalSpace'></textarea></td>" 
+					+ "<td>" + "<textarea name='freeSpace'></textarea></td>" + "<td>" + "<textarea name='location'></textarea></td>" +  "<td>" + "<textarea name='etc'></textarea>" + "</td></tr>";
+					contents += "<tr><td colspan=7>상세구성</td></tr>";
+					contents += "<tr><td colspan=7><textarea name='itemDetail'></textarea>"+ "</td></tr>";
+					contents +="</tbody>";
+					$("#grid").append(contents);			
+					$("#type option").filter(function() {
+									console.log($(this).text());
+									return $(this).text() =="테이프";
+					}).prop('selected', true);						               
+				});		
+//////연결된 장비
+
+				$("#main_form").attr('action',"/tape_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+			} //TAPE추가 끝
+		
+		
+});//THIS.GET(add/:type) 끝
+		this.post("#/connect/:id",function(data){
+			console.log("you get captured");
+		});
+
+//연결장비		
+		this.get("#/connect/:id",function(data){
+			var c_id=this.params['id'];
+			$.getJSON('/job',function(data) {
+					var contents = "<form id='connectform' method='post'><table id='connecttable'></table></form>";
+					$("#front_button_div").append(contents);
+					addConnect(c_id,"connecttable");
+					});
+	/*				
+				$("#main_form").attr('action',"/os_list");			
+				var submitbox = "<input type='submit'>";
+				$("#main_form").append(submitbox);
+				$("#main_div").prepend();
+	*/		
+		});	
+		
+		
+	});// clientrouter 끝
+	
+
+</script>
+
+
+
+<script>
+	$(document).ready(function() { 
+		
+		clientrouter.run("#/");
+		$("#main_form").validationEngine('attach');
+	//table refresh 부분
+	var fadeSpeed=500;
+	$("#cssmenu").hover(
+		function(){ //mouse over
+			$('#cssmenu .label').fadeTo(fadeSpeed, 1);
+			$("#cssmenu .menu").fadeIn(fadeSpeed);
+		},
+		function(){ //mouse out
+			$('#cssmenu .label').fadeTo(fadeSpeed, 0.75);
+			$("#cssmenu .menu").fadeOut(fadeSpeed);
+		}
+	);
+
+
+	
+	
+}); //document 이벤트 끝
+
+
+</script>
+</head>
+<body>
+<header id = "main_header">
+	
+	<img src="http://placehold.it/800x80" />
+	
+</header>   
+	
+	<div id="content">
+		<aside id="main_aside">
+			<div id="cssmenu">
+			<div class="label">MENU</div>
+			<div class="menu">
+				<nav id='main_gnb'>
+					<ul>
+						<li id="os"><a class="menu_item" href="#/os_list" >O/S</a></li>
+						<li id="server"><a class="menu_item" href="#/server_list">SERVER</a></li>
+						<li id="disk"><a class="menu_item" href="#/disk_list">DISK</a></li>
+						<li id="network"><a class="menu_item" href="#/network_list">NETWORK</a></li>
+						<li id="san"><a class="menu_item" href="#/san_list">SAN</a></li>
+						<li id="sw"><a class="menu_item" href="#/sw_list">S/W</a></li>
+						<li id="ip"><a class="menu_item" href="#/ip_list">IP/DNS</a></li>
+						<li id="tape"><a class="menu_item" href="#/tape_list">백업장치/TAPE</a></li>
+						<li id="asset"><a class="menu_item" href="#/asset_list">ASSET</a></li>
+					</ul>
+				</nav>
+				</div>
+			</div>	
+		</aside>
+		
+	<!-- 사이드 바 끝--------------      -->
+	
+		<section id="main_section">
+			<div id="main_div">
+				<div id="front_button_div"></div>
+			<form id="main_form" action="#" method="POST">	
+					<div id="jtable">
+					<table border="1" id="grid" class="tablesorter">
+					</table>
+					</div>
+					<table border="1" id="secondgrid" class="tablesorter">
+					</table>
+					<table border="1" id="thirdgrid" class="tablesorter">
+					</table>
+					<table border="1" id="fourthgrid" class="tablesorter">
+					</table>
+					<table border="1" id="fifthgrid" class="tablesorter">
+					</table>
+					<table border="1" id="sixthgrid" class="tablesorter">
+					</table>
+					<table border="1" id="seventhgrid" class="tablesorter">
+					</table>
+				</form>
+				</div>
+		</section>
+	</div>
+	<footer></footer>
+
+</body>
+</html>
