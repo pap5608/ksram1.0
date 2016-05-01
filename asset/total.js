@@ -2,11 +2,11 @@ angular.module('app', [
 	'ngRoute'])
 
 // LIST 데이터 가져오고 다루는 부분 
-angular.module('app')
-.controller('ListCtrl', function($scope ) {
+angular.module('app') 
+.controller('ListCtrl', function($scope, $routeParams ) {
   $scope.sortType     = 'name'; // set the default sort type
   $scope.sortReverse  = false;  // set the default sort order
-    
+  $scope.type = $routeParams;    
   // create the list of sushi rolls 
   $scope.lists = [
     { name: 'Cali Roll', detail: 'Crab', task: 2 },
@@ -20,6 +20,6 @@ angular.module('app')
 angular.module('app')
 .config(function ($routeProvider) {
 	$routeProvider
-	.when('/list', { controller:'ListCtrl', templateUrl: 'list.html'})
+	.when('/list/:type', { controller:'ListCtrl', templateUrl: 'list.html'})
 
 })
