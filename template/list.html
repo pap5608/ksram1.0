@@ -25,12 +25,13 @@
         </td>
       </tr>
     </thead>
-    {{type.type}}
-    <tbody ng-if="type.type=='server'">
-      <tr ng-repeat="item in lists | orderBy:sortType:sortReverse">
-        <td>{{ item.name }}</td>
-        <td>{{ item.detail }}</td>
-        <td>{{ item.task }}</td>
+    {{types}}
+    dbdata
+    <tbody ng-if="types.type=='server'">
+      <tr ng-repeat="item in dbdata | orderBy:sortType:sortReverse">
+        <td>{{ item.cpu }}</td>
+        <td>{{ item.ram }}</td>
+        <td>{{ item.hdd }}</td>
       </tr>
     </tbody>
     

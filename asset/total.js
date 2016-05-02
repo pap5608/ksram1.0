@@ -3,10 +3,10 @@ angular.module('app', [
 
 // LIST 데이터 가져오고 다루는 부분 
 angular.module('app') 
-.controller('ListCtrl', function($scope, $routeParams ) {
+.controller('ListCtrl', function($scope, $routeParams, listSvc) {
   $scope.sortType     = 'name'; // set the default sort type
   $scope.sortReverse  = false;  // set the default sort order
-  $scope.type = $routeParams;    
+  $scope.types = $routeParams;    
   // create the list of sushi rolls 
   $scope.lists = [
     { name: 'Cali Roll', detail: 'Crab', task: 2 },
@@ -15,7 +15,24 @@ angular.module('app')
     { name: 'Rainbow', detail: 'Variety', task: 6 }
   ];
 
+//   	$scope.dbdata = function () {
+ // 	return $http.get('/list/'+ types.type)
+//  }
+	listSvc.fetch()
+	.success(function (data) {
+		$scope.dbdata = data;
+	})
+
+	
 })
+
+angular.module('app')
+.service('listSvc', function($http) {
+	this.fetch = function() {
+        return $http.get('/api/list/os')
+    }
+})
+
 
 angular.module('app')
 .config(function ($routeProvider) {
